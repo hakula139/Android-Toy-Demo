@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Android Toy Demo</string>
+  <string name="app_name">Android Toy Demo</string>
+  <string name="change">Change</string>
 </resources>
