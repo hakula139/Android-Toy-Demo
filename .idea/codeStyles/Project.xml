@@ -4,12 +4,12 @@
     <AndroidXmlCodeStyleSettings>
       <option name="LAYOUT_SETTINGS">
         <value>
-          <option name="INSERT_LINE_BREAK_AFTER_LAST_ATTRIBUTE" value="true" />
+          <option name="INSERT_LINE_BREAK_BEFORE_NAMESPACE_DECLARATION" value="true" />
         </value>
       </option>
       <option name="MANIFEST_SETTINGS">
         <value>
-          <option name="INSERT_LINE_BREAK_AFTER_LAST_ATTRIBUTE" value="true" />
+          <option name="INSERT_LINE_BREAK_BEFORE_NAMESPACE_DECLARATION" value="true" />
         </value>
       </option>
       <option name="VALUE_RESOURCE_FILE_SETTINGS">
@@ -19,7 +19,7 @@
       </option>
       <option name="OTHER_SETTINGS">
         <value>
-          <option name="INSERT_LINE_BREAK_AFTER_LAST_ATTRIBUTE" value="true" />
+          <option name="INSERT_LINE_BREAK_BEFORE_NAMESPACE_DECLARATION" value="true" />
         </value>
       </option>
     </AndroidXmlCodeStyleSettings>
@@ -37,9 +37,9 @@
     </JavaCodeStyleSettings>
     <XML>
       <option name="XML_ATTRIBUTE_WRAP" value="2" />
-      <option name="XML_KEEP_LINE_BREAKS" value="true" />
       <option name="XML_KEEP_LINE_BREAKS_IN_TEXT" value="false" />
       <option name="XML_ALIGN_ATTRIBUTES" value="true" />
+      <option name="XML_WHITE_SPACE_AROUND_CDATA" value="1" />
     </XML>
     <codeStyleSettings language="HTML">
       <indentOptions>
@@ -49,7 +49,20 @@
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="JAVA">
+      <option name="LINE_COMMENT_AT_FIRST_COLUMN" value="false" />
+      <option name="BLOCK_COMMENT_AT_FIRST_COLUMN" value="false" />
+      <option name="LINE_COMMENT_ADD_SPACE" value="true" />
+      <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />
+      <option name="ELSE_ON_NEW_LINE" value="true" />
+      <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
+      <option name="METHOD_CALL_CHAIN_WRAP" value="2" />
+      <option name="WRAP_FIRST_METHOD_IN_CALL_CHAIN" value="true" />
+      <option name="KEEP_SIMPLE_BLOCKS_IN_ONE_LINE" value="true" />
+      <option name="KEEP_SIMPLE_LAMBDAS_IN_ONE_LINE" value="true" />
+      <option name="KEEP_SIMPLE_CLASSES_IN_ONE_LINE" value="true" />
       <option name="WRAP_COMMENTS" value="true" />
+      <option name="IF_BRACE_FORCE" value="1" />
+      <option name="WRAP_LONG_LINES" value="true" />
       <indentOptions>
         <option name="INDENT_SIZE" value="2" />
         <option name="CONTINUATION_INDENT_SIZE" value="4" />
@@ -60,7 +73,7 @@
       <option name="FORCE_REARRANGE_MODE" value="1" />
       <indentOptions>
         <option name="INDENT_SIZE" value="2" />
-        <option name="CONTINUATION_INDENT_SIZE" value="0" />
+        <option name="CONTINUATION_INDENT_SIZE" value="2" />
         <option name="TAB_SIZE" value="2" />
       </indentOptions>
       <arrangement>

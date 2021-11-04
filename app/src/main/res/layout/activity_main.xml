@@ -5,18 +5,31 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".MainActivity"
-  >
+  tools:context=".MainActivity">
 
   <Button
-    android:id="@+id/button"
+    android:id="@+id/download_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/change"
+    android:text="@string/download"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.5"
-    />
+    app:layout_constraintVertical_bias="0.3" />
+
+  <ImageView
+    android:id="@+id/imageView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:contentDescription="@string/image_name_fudan"
+    android:src="@drawable/ic_launcher_foreground"
+    app:layout_constraintBottom_toTopOf="@+id/download_button"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="?attr/selectableItemBackgroundBorderless" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
