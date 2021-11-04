@@ -32,4 +32,31 @@
     app:layout_constraintTop_toTopOf="parent"
     app:srcCompat="@color/white" />
 
+  <Button
+    android:id="@+id/register_broadcast_button"
+    style="@style/Widget.AppCompat.Button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:text="@string/register_broadcast_button"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/download_button"
+    app:layout_constraintVertical_bias="0.0" />
+
+  <Button
+    android:id="@+id/send_broadcast_button"
+    style="@style/Widget.AppCompat.Button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:text="@string/send_broadcast_button"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.501"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/register_broadcast_button"
+    app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

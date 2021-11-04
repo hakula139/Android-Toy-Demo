@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -76,11 +75,11 @@ class DownloadTask extends AsyncTask<String, Integer, Bitmap> {
   }
 }
 
-class ModalListener implements View.OnClickListener {
+class DownloadButtonListener implements View.OnClickListener {
   private final MainActivity activity;
   ImageView imageView;
 
-  ModalListener(MainActivity activity) {
+  DownloadButtonListener(MainActivity activity) {
     this.activity = activity;
     imageView = activity.findViewById(R.id.imageView);
   }
@@ -105,27 +104,54 @@ class ModalListener implements View.OnClickListener {
   }
 }
 
-class TextListener implements View.OnClickListener {
-  static boolean isRunning = false;
+class RegisterBroadcastButtonListener implements View.OnClickListener {
   private final MainActivity activity;
-  private final TextView textView;
+  private boolean isRegistered = false;
+  private BroadcastReceiver mReceiver = null;
 
-  TextListener(TextView v, MainActivity activity) {
-    textView = v;
+  RegisterBroadcastButtonListener(MainActivity activity) {
     this.activity = activity;
+  }
+
+  public void register() {
+    mReceiver = new AirplaneModeBroadcastReceiver();
+    IntentFilter intentFilter = new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+    activity.registerReceiver(mReceiver, intentFilter);
+  }
+
+  public void unregister() {
+    if (mReceiver != null) {
+      activity.unregisterReceiver(mReceiver);
+    }
   }
 
   @Override
   public void onClick(View v) {
-    isRunning = !isRunning;
-    if (!isRunning) {
-      textView.setText(R.string.broadcast_stopped);
-      activity.unregister();
+    isRegistered = !isRegistered;
+    if (isRegistered) {
+      register();
+    } else {
+      unregister();
     }
-    else {
-      textView.setText(R.string.broadcast_started);
-      activity.register();
-    }
+  }
+}
+
+class SendBroadcastButtonListener implements View.OnClickListener {
+  private final MainActivity activity;
+
+  SendBroadcastButtonListener(MainActivity activity) {
+    this.activity = activity;
+  }
+
+  protected void sendBroadcast() {
+    Intent intent = new Intent();
+    intent.setAction("MyBroadcast");
+    activity.sendBroadcast(intent);
+  }
+
+  @Override
+  public void onClick(View v) {
+    sendBroadcast();
   }
 }
 
@@ -147,32 +173,25 @@ class AirplaneModeBroadcastReceiver extends BroadcastReceiver {
 
 
 public class MainActivity extends Activity {
-  BroadcastReceiver mReceiver = null;
-  private Button downloadButton = null;
-  // private TextView textView = null;
-
-  public void register() {
-    mReceiver = new AirplaneModeBroadcastReceiver();
-    IntentFilter intentFilter = new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED);
-    registerReceiver(mReceiver, intentFilter);
-  }
-
-  public void unregister() {
-    if (mReceiver != null) {
-      unregisterReceiver(mReceiver);
-    }
-  }
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    downloadButton = findViewById(R.id.download_button);
-    // textView = findViewById(R.id.textView);
+    Button downloadButton = findViewById(R.id.download_button);
+    DownloadButtonListener downloadButtonListener =
+        new DownloadButtonListener(this);
+    downloadButton.setOnClickListener(downloadButtonListener);
 
-    ModalListener modalListener = new ModalListener(this);
-    downloadButton.setOnClickListener(modalListener);
+    Button registerBroadcastButton = findViewById(R.id.register_broadcast_button);
+    RegisterBroadcastButtonListener registerBroadcastButtonListener =
+        new RegisterBroadcastButtonListener(this);
+    registerBroadcastButton.setOnClickListener(registerBroadcastButtonListener);
+
+    Button sendBroadcastButton = findViewById(R.id.send_broadcast_button);
+    SendBroadcastButtonListener sendBroadcastButtonListener =
+        new SendBroadcastButtonListener(this);
+    sendBroadcastButton.setOnClickListener(sendBroadcastButtonListener);
   }
 
   @Override
@@ -208,7 +227,6 @@ public class MainActivity extends Activity {
 
   @Override
   protected void onDestroy() {
-    unregister();
     super.onDestroy();
     Log.i("INFO", "onDestroy");
   }
