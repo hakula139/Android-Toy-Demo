@@ -2,10 +2,10 @@
   <string name="app_name">Android Toy Demo</string>
   <string name="broadcast_started">BroadCast receiver started</string>
   <string name="broadcast_stopped">BroadCast receiver stopped</string>
-  <string name="download">下载</string>
+  <string name="download">下载图片</string>
   <string name="download_modal_title">确认下载</string>
   <string name="download_modal_msg">点击确定下载图片</string>
   <string name="ok_text">确定</string>
   <string name="cancel_text">取消</string>
-  <string name="image_name_fudan">复旦大学</string>
+  <string name="image_name">图片</string>
 </resources>

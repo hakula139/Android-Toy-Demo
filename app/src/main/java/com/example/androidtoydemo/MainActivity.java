@@ -34,7 +34,7 @@ class DownloadTask extends AsyncTask<String, Integer, Bitmap> {
   }
 
   public static Bitmap getBitmap() {
-    String url = "https://www.fudan.edu.cn/_upload/site/00/02/2/logo.png";
+    String url = "https://hakula.xyz/usr/uploads/hotlink-ok/avatar.jpg";
     URL myFileUrl;
     Bitmap bitmap;
 
@@ -53,7 +53,7 @@ class DownloadTask extends AsyncTask<String, Integer, Bitmap> {
       bitmap = BitmapFactory.decodeStream(is);
       is.close();
     } catch (IOException e) {
-      Log.e("ERROR", "Failed to parse input stream, error: " + e.toString());
+      Log.e("ERROR", "Image not found");
       return null;
     }
     return bitmap;
