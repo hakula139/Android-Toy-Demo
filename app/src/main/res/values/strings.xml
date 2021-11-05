@@ -1,8 +1,9 @@
 <resources>
   <string name="app_name">Android Toy Demo</string>
-  <string name="broadcast_started">BroadCast receiver started</string>
-  <string name="broadcast_stopped">BroadCast receiver stopped</string>
-  <string name="register_broadcast_button">注册 / 注销广播</string>
+  <string name="broadcast_started">Broadcast receiver started</string>
+  <string name="broadcast_stopped">Broadcast receiver stopped</string>
+  <string name="register_broadcast_button">注册广播</string>
+  <string name="unregister_broadcast_button">注销广播</string>
   <string name="send_broadcast_button">发送广播</string>
   <string name="download">下载图片</string>
   <string name="download_modal_title">确认下载</string>

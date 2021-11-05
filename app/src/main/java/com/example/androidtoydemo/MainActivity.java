@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -65,7 +66,7 @@ class DownloadTask extends AsyncTask<String, Integer, Bitmap> {
 
   @Override
   protected void onPostExecute(Bitmap result) {
-    Activity activity = activityRef.get();
+    MainActivity activity = activityRef.get();
     if (activity != null) {
       ImageView imageView = activity.findViewById(R.id.imageView);
       if (result != null) {
@@ -77,11 +78,9 @@ class DownloadTask extends AsyncTask<String, Integer, Bitmap> {
 
 class DownloadButtonListener implements View.OnClickListener {
   private final MainActivity activity;
-  ImageView imageView;
 
   DownloadButtonListener(MainActivity activity) {
     this.activity = activity;
-    imageView = activity.findViewById(R.id.imageView);
   }
 
   protected void dialog() {
@@ -106,23 +105,31 @@ class DownloadButtonListener implements View.OnClickListener {
 
 class RegisterBroadcastButtonListener implements View.OnClickListener {
   private final MainActivity activity;
+  private final Button registerBroadcastButton;
+  private final TextView broadcastTextView;
   private boolean isRegistered = false;
   private BroadcastReceiver mReceiver = null;
 
   RegisterBroadcastButtonListener(MainActivity activity) {
     this.activity = activity;
+    registerBroadcastButton = activity.findViewById(R.id.register_broadcast_button);
+    broadcastTextView = activity.findViewById(R.id.broadcast_textview);
   }
 
   public void register() {
     mReceiver = new AirplaneModeBroadcastReceiver();
     IntentFilter intentFilter = new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED);
     activity.registerReceiver(mReceiver, intentFilter);
+    registerBroadcastButton.setText(R.string.unregister_broadcast_button);
+    broadcastTextView.setText(R.string.broadcast_started);
   }
 
   public void unregister() {
     if (mReceiver != null) {
       activity.unregisterReceiver(mReceiver);
     }
+    registerBroadcastButton.setText(R.string.register_broadcast_button);
+    broadcastTextView.setText(R.string.broadcast_stopped);
   }
 
   @Override
