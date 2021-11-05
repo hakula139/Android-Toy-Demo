@@ -121,7 +121,7 @@ class RegisterBroadcastButtonListener implements View.OnClickListener {
     IntentFilter intentFilter = new IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED);
     activity.registerReceiver(mReceiver, intentFilter);
     registerBroadcastButton.setText(R.string.unregister_broadcast_button);
-    broadcastTextView.setText(R.string.broadcast_started);
+    broadcastTextView.setText(R.string.broadcast_started_msg);
   }
 
   public void unregister() {
@@ -129,7 +129,7 @@ class RegisterBroadcastButtonListener implements View.OnClickListener {
       activity.unregisterReceiver(mReceiver);
     }
     registerBroadcastButton.setText(R.string.register_broadcast_button);
-    broadcastTextView.setText(R.string.broadcast_stopped);
+    broadcastTextView.setText(R.string.broadcast_stopped_msg);
   }
 
   @Override
@@ -145,14 +145,29 @@ class RegisterBroadcastButtonListener implements View.OnClickListener {
 
 class SendBroadcastButtonListener implements View.OnClickListener {
   private final MainActivity activity;
+  private final String MY_BROADCAST_NAME = "com.example.androidtoydemo.MY_BROADCAST";
+  private BroadcastReceiver mReceiver = null;
 
   SendBroadcastButtonListener(MainActivity activity) {
     this.activity = activity;
+    register();
+  }
+
+  public void register() {
+    mReceiver = new MyBroadcastReceiver();
+    IntentFilter intentFilter = new IntentFilter(MY_BROADCAST_NAME);
+    activity.registerReceiver(mReceiver, intentFilter);
+  }
+
+  public void unregister() {
+    if (mReceiver != null) {
+      activity.unregisterReceiver(mReceiver);
+    }
   }
 
   protected void sendBroadcast() {
     Intent intent = new Intent();
-    intent.setAction("MyBroadcast");
+    intent.setAction(MY_BROADCAST_NAME);
     activity.sendBroadcast(intent);
   }
 
@@ -172,32 +187,42 @@ class AirplaneModeBroadcastReceiver extends BroadcastReceiver {
           .get("state")
           .toString();
       Toast
-          .makeText(context, intent.getAction() + ": " + msg, Toast.LENGTH_LONG)
+          .makeText(context, action + ": " + msg, Toast.LENGTH_LONG)
           .show();
     }
   }
 }
 
+class MyBroadcastReceiver extends BroadcastReceiver {
+  @Override
+  public void onReceive(Context context, Intent intent) {
+    String action = intent.getAction();
+    Toast
+        .makeText(context, action + ": received broadcast", Toast.LENGTH_LONG)
+        .show();
+  }
+}
+
 
 public class MainActivity extends Activity {
+  private RegisterBroadcastButtonListener registerBroadcastButtonListener = null;
+  private SendBroadcastButtonListener sendBroadcastButtonListener = null;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
     Button downloadButton = findViewById(R.id.download_button);
-    DownloadButtonListener downloadButtonListener =
-        new DownloadButtonListener(this);
+    DownloadButtonListener downloadButtonListener = new DownloadButtonListener(this);
     downloadButton.setOnClickListener(downloadButtonListener);
 
     Button registerBroadcastButton = findViewById(R.id.register_broadcast_button);
-    RegisterBroadcastButtonListener registerBroadcastButtonListener =
-        new RegisterBroadcastButtonListener(this);
+    registerBroadcastButtonListener = new RegisterBroadcastButtonListener(this);
     registerBroadcastButton.setOnClickListener(registerBroadcastButtonListener);
 
     Button sendBroadcastButton = findViewById(R.id.send_broadcast_button);
-    SendBroadcastButtonListener sendBroadcastButtonListener =
-        new SendBroadcastButtonListener(this);
+    sendBroadcastButtonListener = new SendBroadcastButtonListener(this);
     sendBroadcastButton.setOnClickListener(sendBroadcastButtonListener);
   }
 
@@ -234,6 +259,12 @@ public class MainActivity extends Activity {
 
   @Override
   protected void onDestroy() {
+    if (registerBroadcastButtonListener != null) {
+      registerBroadcastButtonListener.unregister();
+    }
+    if (sendBroadcastButtonListener != null) {
+      sendBroadcastButtonListener.unregister();
+    }
     super.onDestroy();
     Log.i("INFO", "onDestroy");
   }
