@@ -10,6 +10,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -200,9 +202,43 @@ class MyBroadcastReceiver extends BroadcastReceiver {
     Toast
         .makeText(context, action + ": received broadcast", Toast.LENGTH_LONG)
         .show();
+    MyHandler
+        .getInstance()
+        .sendEmptyMessage(1);
   }
 }
 
+
+class MyHandler extends Handler {
+  private static MyHandler myHandler = null;
+  private static MainActivity activity = null;
+
+  @SuppressWarnings("deprecation")
+  private MyHandler() {
+  }
+
+  public static MyHandler getInstance() {
+    if (myHandler == null) {
+      myHandler = new MyHandler();
+    }
+    return myHandler;
+  }
+
+  public static void setActivity(MainActivity activity) {
+    MyHandler.activity = activity;
+  }
+
+  @Override
+  public void handleMessage(Message msg) {
+    if (msg.what == 1 && activity != null) {
+      DownloadTask task = new DownloadTask(activity);
+      task.execute();
+    } else {
+      Log.e("ERROR", "MyHandler not properly initialized");
+    }
+    super.handleMessage(msg);
+  }
+}
 
 public class MainActivity extends Activity {
   private RegisterBroadcastButtonListener registerBroadcastButtonListener = null;
@@ -212,6 +248,8 @@ public class MainActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    MyHandler.setActivity(this);
 
     Button downloadButton = findViewById(R.id.download_button);
     DownloadButtonListener downloadButtonListener = new DownloadButtonListener(this);
